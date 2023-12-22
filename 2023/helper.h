@@ -22,7 +22,23 @@ void split(const std::string &s, char delim, Out result) {
     }
 }
 
+template <typename Out>
+void split(const std::string &s, const std::string &delim, Out result) {
+    size_t start = 0, end = 0;
+    while ((end = s.find(delim, start)) != std::string::npos) {
+        *result++ = s.substr(start, end - start);
+        start = end + delim.length();
+    }
+    *result++ = s.substr(start);
+}
+
 std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
+
+std::vector<std::string> split(const std::string &s, const std::string &delim) {
     std::vector<std::string> elems;
     split(s, delim, std::back_inserter(elems));
     return elems;
